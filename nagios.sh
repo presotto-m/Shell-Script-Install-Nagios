@@ -58,6 +58,7 @@ sudo systemctl start nagios.service
 apt install ufw -y
 
 sudo ufw allow 80
+sudo ufw allow 22
 
 sudo ufw reload
 
