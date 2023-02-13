@@ -40,26 +40,35 @@ sudo systemctl restart apache2
 # Adicionando senha de adminitrador Nagios
 sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
 
+# Alterando permissão de pastas
 sudo chown www-data:www-data /usr/local/nagios/etc/htpasswd.users
 sudo chmod 640 /usr/local/nagios/etc/htpasswd.users
 
+# Baixando a última versão estável dos plug-ins do Nagios
 wget https://github.com/nagios-plugins/nagios-plugins/releases/download/release-2.3.3/nagios-plugins-2.3.3.tar.gz
 
+# Extraindo arquivos
 tar xvzf nagios-plugins-2.3.3.tar.gz
 
+# navegue até o diretório da pasta de plugins e compile e instale seu conteúdo
 cd nagios-plugins-2.3.3.tar.gz
 ./configure --with-nagios-user=nagios --with-nagios-group=nagios
 sudo make
 sudo make install
 
+# Inicie os serviços Apache e Nagios
 sudo systemctl restart apache2
 sudo systemctl start nagios.service
 
+# Instalando Firewall
 apt install ufw -y
 
+# Permitindo acesso pelas portas 80 e 22
 sudo ufw allow 80
 sudo ufw allow 22
 
+# Reiniciando o firewall para que as alterações entrem em vigor
 sudo ufw reload
 
+# Habilitando o firewall para iniciar na inicialização
 sudo ufw enable
